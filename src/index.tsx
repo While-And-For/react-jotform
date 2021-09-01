@@ -13,6 +13,10 @@ export interface JotformProps {
   scrolling?: boolean;
 }
 
+function replaceAll(string: string, search: string, replace: string) {
+  return string.split(search).join(replace);
+}
+
 const createSource = (src: string, defaults?: DefaultValues): string => {
   const url = new URL(src);
 
@@ -23,7 +27,7 @@ const createSource = (src: string, defaults?: DefaultValues): string => {
   }
 
   url.searchParams.set("isIframeEmbed", "1");
-  return url.toString();
+  return replaceAll(url.toString(), "+", " "); // Hot fix for + issue...
 };
 
 const isPermitted = (originUrl: string, whitelisted_domains: string[]) => {
